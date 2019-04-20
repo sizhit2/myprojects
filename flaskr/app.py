@@ -8,7 +8,7 @@ import nltk
 from nltk.corpus import stopwords
 import numpy as np
 app = Flask(__name__)
-movie = pd.read_csv('../combined_corpus_for_search_engine.csv')
+movie = pd.read_csv('data/combined_corpus_for_search_engine.csv')
 data_movie = movie['Combined']
 s_movie = []
 for i in range(len(data_movie)):
@@ -26,7 +26,7 @@ def test():
 
     if request.method == 'POST':
         
-        with open('../model.pkl','rb') as fid:
+        with open('model.pkl','rb') as fid:
             model = pickle.load(fid)
 		
         message = request.form['message']
