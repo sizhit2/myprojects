@@ -18,17 +18,35 @@
 	<p style="color:blue;font-size:20;text-align: center;"><b>Results for my search engine</b></p>
 	<div class="results">
 
-            <ul>
+            <ul>	
+				{% if prediction == 'bad' %}
+						<h2> Please give me more concrete infomation !</h2>
+						{% else %}
 					{% for item in prediction %}
 						<h2> Title </h2>
-						<li>{{ item[0] }}</li>
+						<form action={{item[3]}} method="GET",target="_blank">
+							<button type="submit">{{ item[2][0] }}</button>
+						</form>
 						<h3> Description</h3>
+						<li>{{ item[2][1] }}</li>
+						<h2> Rating </h2>
+						<body>{{ item[0] }}</body>
+						<h3> Genre </h3>
 						<li>{{ item[1] }}</li>
-                    {% endfor %}
+					{% endfor %}
+					{% endif %}
             </ul>
 		
 
 	</div>
+	
+	<body>
+		
+		<h2>picture title name </h2>
+		
+		{{ mydiv }}
+		
+		</body>
 
 </body>
 </html>
