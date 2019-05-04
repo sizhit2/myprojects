@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+	<header>
+		<div class="container">
+		<div id="brandname">
+			ML App
+		</div>
+		<h2>Movie search engine</h2>
+		
+	</div>
+	</header>
+	<p style="color:blue;font-size:20;text-align: center;"><b>Results for my search engine</b></p>
+	<div class="results">
+
+            <ul>	
+                        <h2> Number of Movie </h2>
+                         <body>{{ info[0] }} </body>
+						<h3> Most Popular Actor</h3>
+						<body>{{ info[1] }} </body>
+						<h3> Most Popular Director</h3>
+						<body>{{ info[2] }} </body>
+						<h3> Most Popular Studio</h3>
+                        <body>{{ info[3] }} </body>
+                        
+                        <h3> Best movie in this category</h3>
+                        <body>Rating : {{ info[4][0] }} </body>
+                        <br> 
+                        <body> Info: <br> {{ info[4][1]['Cast 1'].iloc[0] }}</body>
+
+                        <h3> Worst movie in this category</h3>
+                        <body>Rating : {{ info[5][0] }} </body>
+                        <body> Info: {{ info[5][1] }}</body>
+            </ul>
+		
+
+	</div>
+	
+	<body>
+		
+		<h2> Visulization for movies </h2>
+		
+		{{ mydiv }}
+		
+</body>
+</html>

@@ -97,6 +97,84 @@ def test():
     my_plot = plot(fig, output_type='div')
 
     return render_template('test.html',prediction = info,mydiv = Markup(my_plot))
+
+@app.route('/action')
+def action():
+    df_action = movie[movie['Genre'].str.contains('Action') ]
+    info = []
+    info.append(len(df_action))
+    info.append(df_action['Cast 1'].value_counts().index[0])
+    info.append(df_action['Director 1'].value_counts().index[0])
+    info.append(df_action['Studio'].value_counts().index[0])
+    info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
+    info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    actor = go.Bar(
+                y=df_action['Cast 1'].value_counts()[:10],
+                x=df_action['Cast 1'].value_counts()[:10].index[:10],
+                text=df_action['Cast 1'].value_counts()[:10],
+                textposition = 'auto',
+                marker=dict(
+                    color='rgb(234,125,92)',
+                    line=dict(
+                        color='rgb(8,48,107)',
+                        width=1.5),
+                ),
+                name = 'Actor',
+                opacity=0.6
+            )
+    director = go.Bar(
+                y=df_action['Director 1'].value_counts()[:10],
+                x=df_action['Director 1'].value_counts()[:10].index[:10],
+                text=df_action['Director 1'].value_counts()[:10],
+                textposition = 'auto',
+                marker=dict(
+                    color='rgb(119,174,103)',
+                    line=dict(
+                        color='rgb(8,48,107)',
+                        width=1.5),
+                ),
+        name = 'Director',
+                opacity=0.6
+            )
+    studio = go.Bar(
+                y=df_action['Studio'].value_counts()[:10],
+                x=df_action['Studio'].value_counts()[:10].index[:10],
+                text=df_action['Studio'].value_counts()[:10],
+                textposition = 'auto',
+                marker=dict(
+                    color='rgb(204,106,118)',
+                    line=dict(
+                        color='rgb(8,48,107)',
+                        width=1.5),
+                ),
+        name = 'Studio',
+                opacity=0.6
+            )
+    score = go.Histogram(
+                x=df_action['scores'],
+                xbins=dict(
+                start=0,
+                end=10,
+                size=0.5
+            ),
+                marker=dict(
+                    color='rgb(103,162,178)',
+                    line=dict(
+                        color='rgb(8,48,107)',
+                        width=1.5),
+                ),
+        name = 'Score',
+                opacity=0.6
+            )
+
+    fig.append_trace(actor, 1, 1)
+    fig.append_trace(director, 1, 2)
+    fig.append_trace(studio, 2, 1)
+    fig.append_trace(score, 2, 2)
+    fig['layout'].update(height=1600, width=1000, title='Information about Action movie')
+    my_plot = plot(fig, output_type='div')
+    return render_template('action.html',info = info,mydiv = Markup(my_plot))
 if __name__ == "__main__":
     app.run(debug=True)
     # jobs for next time: A dynamic graph in text.html based both rating and distances, Provide some general movie recommendation in index.html page
