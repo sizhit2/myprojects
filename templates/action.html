@@ -31,11 +31,33 @@
                         <h3> Best movie in this category</h3>
                         <body>Rating : {{ info[4][0] }} </body>
                         <br> 
-                        <body> Info: <br> {{ info[4][1]['Cast 1'].iloc[0] }}</body>
+                        <body> Info: {{ info[4][1]['Title'].iloc[0] }}
+                            <br> Title : {{ info[4][1]['Cast 2'].iloc[0] }}
+                            <br> Main Cast 1 : {{ info[4][1]['Cast 1'].iloc[0] }}
+                            <br> Main Cast 2 : {{ info[4][1]['Cast 2'].iloc[0] }}
+                            <br> Main Cast 3 : {{ info[4][1]['Cast 3'].iloc[0] }}
+                            <br> Main Director 1 : {{ info[4][1]['Director 1'].iloc[0] }}
+                            <br> Main Director 2 : {{ info[4][1]['Director 2'].iloc[0] }}
+                            <br> Main Write : {{ info[4][1]['Writer 1'].iloc[0] }}
+                            <br> Genre : {{ info[4][1]['Genre'].iloc[0] }}
+                            <br> url : <a href={{info[4][1]['url'].iloc[0]}} >links to Rotten Tomatoes for more information</a> 
+                        </body>
 
+                    
                         <h3> Worst movie in this category</h3>
                         <body>Rating : {{ info[5][0] }} </body>
-                        <body> Info: {{ info[5][1] }}</body>
+                        <br> 
+                        <body> Info: {{ info[5][1]['Title'].iloc[0] }}
+                            <br> Title : {{ info[5][1]['Cast 2'].iloc[0] }}
+                            <br> Main Cast 1 : {{ info[5][1]['Cast 1'].iloc[0] }}
+                            <br> Main Cast 2 : {{ info[5][1]['Cast 2'].iloc[0] }}
+                            <br> Main Cast 3 : {{ info[5][1]['Cast 3'].iloc[0] }}
+                            <br> Main Director 1 : {{ info[5][1]['Director 1'].iloc[0] }}
+                            <br> Main Director 2 : {{ info[5][1]['Director 2'].iloc[0] }}
+                            <br> Main Write : {{ info[5][1]['Writer 1'].iloc[0] }}
+                            <br> Genre : {{ info[5][1]['Genre'].iloc[0] }}
+                            <br> url : <a href={{info[5][1]['url'].iloc[0]}} >links to Rotten Tomatoes for more information</a> 
+                        </body>
             </ul>
 		
 
