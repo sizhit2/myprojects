@@ -16,11 +16,22 @@ application = Flask(__name__)
 app = application
 movie = pd.read_csv('data/movie.csv')
 data_movie = movie['Combined']
-
+movie.replace({'Title': 'A Night to Remember  '},'The Witcher 3: Wild Hunt Launch',inplace=True)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    choice = []
+    action = movie[movie['Genre'].str.contains('Action') ].sort_values(by='scores')[::-1][:10]
+    comedy = movie[movie['Genre'].str.contains('Comedy') ].sort_values(by='scores')[::-1][:10]
+    docu = movie[movie['Genre'].str.contains('Document') ].sort_values(by='scores')[::-1][:10]
+    mystery = movie[movie['Genre'].str.contains('Mystery') ].sort_values(by='scores')[::-1][:10]
+    roman = movie[movie['Genre'].str.contains('Romance') ].sort_values(by='scores')[::-1][:10]
+    drama = movie[movie['Genre'].str.contains('Drama') ].sort_values(by='scores')[::-1][:10]
+    scifi = movie[movie['Genre'].str.contains('SciFi') ].sort_values(by='scores')[::-1][:10]
+    classic = movie[movie['Genre'].str.contains('Classic') ].sort_values(by='scores')[::-1][:10]
+    All = movie.sort_values(by='scores')[::-1][:10]
+    choice = [action,comedy,docu,mystery,roman,drama,scifi,classic,All]
+    return render_template("index.html",choice = choice)
 # server = dash.Dash(__name__, server = app, url_base_pathname='/Action/' )
 
 
@@ -50,16 +61,19 @@ def test():
             else:
                 j = np.argwhere(result[1][0] == i)[0][0]
             if(result[0][0][j] != 1):
-                l = [t,data_movie.iloc[i]]
+                l = [t,movie.iloc[i]]
                 scores.append(movie['scores'].iloc[i])
                 info.append([movie['scores'].iloc[i],movie['Genre'].iloc[i],l,movie['url'].iloc[i]])
                 idx.append(j)
                 labels.append(t)
     values = result[0][0][idx]
-    values_query = 10 - values
-    values_score = (10 - values) * 0.3 + np.array(scores) * 0.7
-    if(values[0] == 1):
-        return render_template('test.html',prediction = 'bad')
+    values_query = 1/1000 * (10 - values)**4
+    values_score = values_query * 0.2 + np.array(scores) * 0.8
+    try:
+        if(values[0] == 1):
+            return render_template('test.html',prediction = 'bad')
+    except IndexError:
+        return render_template('test.html',prediction = 'bad') 
     colors = ['#FEBFB3', '#E1396C', '#96D38C', '#D0F9B1','#A9D9B1']
     trace = go.Pie(labels=labels, values=values_query,
                hoverinfo='label+percent', textinfo='value', 
@@ -88,10 +102,8 @@ def test():
             x=0.95,
             y=1.2
             )
-    layout = go.Layout(title ='Still do not know what to decide? check our plots below',
+    layout = go.Layout(title ='Two results',
                    annotations=[ann1,ann2],
-                   # Hide legend if you want
-                   #showlegend=False
                    )
     fig = go.Figure(data=data,layout=layout)
     my_plot = plot(fig, output_type='div')
@@ -106,9 +118,9 @@ def action():
     info.append(df_action['Cast 1'].value_counts().index[0])
     info.append(df_action['Director 1'].value_counts().index[0])
     info.append(df_action['Studio'].value_counts().index[0])
-    info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
+    info.append([df_action['scores'].sort_values()[::-1].iloc[2],df_action[df_action['scores'] == df_action['scores'].sort_values()[::-1].iloc[2]]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -185,7 +197,7 @@ def comedy():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -263,7 +275,7 @@ def docu():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -341,7 +353,7 @@ def drama():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -417,9 +429,9 @@ def classic():
     info.append(df_action['Cast 1'].value_counts().index[0])
     info.append(df_action['Director 1'].value_counts().index[0])
     info.append(df_action['Studio'].value_counts().index[0])
-    info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
+    info.append([df_action['scores'].sort_values()[::-1].iloc[2],df_action[df_action['scores'] == df_action['scores'].sort_values()[::-1].iloc[2]]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -497,7 +509,7 @@ def romance():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -575,7 +587,7 @@ def scifi():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -653,7 +665,7 @@ def mystery():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -731,7 +743,7 @@ def all():
     info.append(df_action['Studio'].value_counts().index[0])
     info.append([df_action['scores'].max(),df_action[df_action['scores'] == df_action['scores'].max()]])
     info.append([df_action['scores'].min(),df_action[df_action['scores'] == df_action['scores'].min()]])
-    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distributio'))
+    fig = tools.make_subplots(rows=2, cols=2,subplot_titles = ('Most Popular Actors','Most popular director','Most popular studio','Scores Distribution'))
     actor = go.Bar(
                 y=df_action['Cast 1'].value_counts()[:10],
                 x=df_action['Cast 1'].value_counts()[:10].index[:10],
@@ -799,5 +811,5 @@ def all():
     my_plot = plot(fig, output_type='div')
     return render_template('Overall.html',info = info,mydiv = Markup(my_plot))
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
     # jobs for next time: A dynamic graph in text.html based both rating and distances, Provide some general movie recommendation in index.html page

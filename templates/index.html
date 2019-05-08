@@ -52,10 +52,8 @@
   <!-- Header -->
   <header class="masthead bg-primary text-white text-center">
     <div class="container">
-      <h1 class="text-uppercase mb-0">Movie Search Engine</h1>
+      <h1 class="text-uppercase mb-0">Movie Search Engine/Recommerder</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Personalized ranking algorithm</h2>
-      <h2 class="font-weight-light mb-0">By Guangya Wan, Lujia Kang, Hongxuan Chen, Sizhi Tan</h2>
     </div>
   </header>
 
@@ -65,8 +63,13 @@
         <h2 class="text-center text-uppercase text-secondary mb-0">About</h2>
         <hr class="star-dark mb-5">
   
-        <h3 class="text-secondary mb-3"> The goal of Movie Search Engine is to build a more user-oriented search engine/recommendation system about movies. 
-          Specifically, it will display movies to users based on features like rating, reviews and genres, etc), and it can adjust its content if users would like to provide more information about what they want. </h3>
+        <h3 class="text-secondary mb-3"> The goal of Movie Search Engine is meant to be a complementary of Rotten tomato. We want to build a more succinct search engine/recommendation system about movies. 
+          Specifically,Users get movies recommendation if they have
+          a preference genre or they can type whatever they want and we will provide some related movies.The query has to be at least somewhat reasonable or we will not be able to provide any useful information. The output two scores; one is fully based on 
+          the similarity of the query, another is to combine similarity with the rating of the movie. We also provide some visulization for different genre of 
+          movies because we know a picture is worth a thousand words! If you want to know more information, which we do not have due to our building philosophy, we
+          provide you the link to the Rotten tomato with the specific movie which has much more information
+          . </h3>
         
   
 
@@ -235,51 +238,42 @@
           <p class="lead mb-0"> CS410 Spring 2019
             <br>Movie Recommender</p>
         </div>
-        <div class="col-md-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">Around the Web</h4>
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fab fa-fw fa-facebook-f"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fab fa-fw fa-google-plus-g"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fab fa-fw fa-twitter"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fab fa-fw fa-linkedin-in"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fab fa-fw fa-dribbble"></i>
-              </a>
-            </li>
-          </ul>
+        <div >
+            <h4 class="text-uppercase mb-4">Gitlab/hub</h4>
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://lab.textdata.org/hc10/Course_project">
+                  <i class="fab fa-fw fa-gitlab"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/wan19990901/projects">
+                  <i class="fab fa-fw fa-github"></i>
+                </a>
+              </li>
         </div>
         <div class="col-md-4">
-          <h4 class="text-uppercase mb-4">About Movie</h4>
-          <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-        </div>
-      </div>
+          <h4 class="text-uppercase mb-4">About Data</h4>
+          <p class="lead mb-0">We only included a sample dataset about 30K movies, please refer to the link for more information
+            <a href="https://www.kaggle.com/ayushkalla1/rotten-tomatoes-movie-database">Kaggle dataset</a>.</p>
     </div>
+    <div class="col-md-4">
+        <h4 class="text-uppercase mb-4">Contribution</h4>
+        <p class="lead mb-0">By Guangya Wan, Lujia Kang, Hongxuan Chen, Sizhi Tan, Specical Thanks To Professor 
+          <a href="http://czhai.cs.illinois.edu/"> ChengXiang Zhai</a>  for his excellent teaching
+          .</p>
+      </div>
+  </div>
   </footer>
 
   
   <div class="copyright py-4 text-center text-white">
     <div class="container">
-      <small>Copyright &copy; Your Website 2019</small>
+      <small>Copyright &copy; http://cs410.pnxppjnsf2.us-west-1.elasticbeanstalk.com/</small>
     </div>
   </div>
+
+  
 
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <div class="scroll-to-top d-lg-none position-fixed ">
@@ -287,6 +281,8 @@
       <i class="fa fa-chevron-up"></i>
     </a>
   </div>
+
+
 
   <!-- Portfolio Modals -->
 
@@ -299,14 +295,19 @@
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2 class="text-secondary text-uppercase mb-0">Action Movies</h2>
+            <h2 class="text-secondary text-uppercase mb-0">Action Movies Editor's Top 10 Choice</h2>
             <hr class="star-dark mb-5">
-            <a href="/action">Action</a>
+            <ol style="list-style-type:none;">
+                {% for index, item in choice[0].iterrows() %}
+                <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                  {% endfor %}
+              </ol>
+            <h4> <a href="/action">More about Action movies</a> </h4>
             <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
-            <p class="mb-5"> action movie is... </p>
+            <br>
             <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
               <i class="fa fa-close"></i>
-              Close Project</a>
+              Close </a>
           </div>
         </div>
       </div>
@@ -315,47 +316,58 @@
 
   <!-- Portfolio Modal 2 -->
   <div class="portfolio-modal mfp-hide" id="portfolio-modal-2">
-    <div class="portfolio-modal-dialog bg-white">
-      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-        <i class="fa fa-3x fa-times"></i>
-      </a>
-      <div class="container text-center">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <h2 class="text-secondary text-uppercase mb-0">Comedy Movies</h2>
-            <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-            <p class="mb-5">comedy</p>
-            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-              <i class="fa fa-close"></i>
-              Close Project</a>
+      <div class="portfolio-modal-dialog bg-white">
+        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+          <i class="fa fa-3x fa-times"></i>
+        </a>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2 class="text-secondary text-uppercase mb-0">Comedy Movies Editor's Top 10 Choice</h2>
+              <hr class="star-dark mb-5">
+              <ol style="list-style-type:none;">
+                  {% for index, item in choice[1].iterrows() %}
+                  <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                    {% endfor %}
+                </ol>
+              <h4> <a href="/comedy">More about Comedy movies</a> </h4>
+              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+              <br>
+              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+                <i class="fa fa-close"></i>
+                Close </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
   <!-- Portfolio Modal 3 -->
   <div class="portfolio-modal mfp-hide" id="portfolio-modal-3">
-    <div class="portfolio-modal-dialog bg-white">
-      <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-        <i class="fa fa-3x fa-times"></i>
-      </a>
-      <div class="container text-center">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
-            <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-            <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-              <i class="fa fa-close"></i>
-              Close Project</a>
+      <div class="portfolio-modal-dialog bg-white">
+        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+          <i class="fa fa-3x fa-times"></i>
+        </a>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2 class="text-secondary text-uppercase mb-0">Documentary Movies Editor's Top 10 Choice</h2>
+              <hr class="star-dark mb-5">
+              <ol style="list-style-type:none;">
+                  {% for index, item in choice[2].iterrows() %}
+                  <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                    {% endfor %}
+                </ol>
+              <h4> <a href="/docu">More about Documentary movies</a> </h4>
+              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+              <br>
+              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+                <i class="fa fa-close"></i>
+                Close </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 
     <!-- Portfolio Modal 4 -->
@@ -367,13 +379,19 @@
           <div class="container text-center">
             <div class="row">
               <div class="col-lg-8 mx-auto">
-                <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
+                <h2 class="text-secondary text-uppercase mb-0">Mystery/Thriller Movies Editor's Top 10 Choice</h2>
                 <hr class="star-dark mb-5">
-                <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <ol style="list-style-type:none;">
+                    {% for index, item in choice[3].iterrows() %}
+                    <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                      {% endfor %}
+                  </ol>
+                <h4> <a href="/mystery">More about Mystery/Thriller movies</a> </h4>
+                <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+                <br>
                 <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
                   <i class="fa fa-close"></i>
-                  Close Project</a>
+                  Close </a>
               </div>
             </div>
           </div>
@@ -381,27 +399,33 @@
       </div>
 
         <!-- Portfolio Modal 5 -->
-  <div class="portfolio-modal mfp-hide" id="portfolio-modal-5">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
+        <div class="portfolio-modal mfp-hide" id="portfolio-modal-5">
+            <div class="portfolio-modal-dialog bg-white">
+              <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+                <i class="fa fa-3x fa-times"></i>
+              </a>
+              <div class="container text-center">
+                <div class="row">
+                  <div class="col-lg-8 mx-auto">
+                    <h2 class="text-secondary text-uppercase mb-0">Romance Movies Editor's Top 10 Choice</h2>
+                    <hr class="star-dark mb-5">
+                    <ol style="list-style-type:none;">
+                        {% for index, item in choice[4].iterrows() %}
+                        <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                          {% endfor %}
+                      </ol>
+                    <h4> <a href="/romance">More about Romance movies</a> </h4>
+                    <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+                    <br>
+                    <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+                      <i class="fa fa-close"></i>
+                      Close </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
+    
 
         <!-- Portfolio Modal 6 -->
         <div class="portfolio-modal mfp-hide" id="portfolio-modal-6">
@@ -412,89 +436,116 @@
               <div class="container text-center">
                 <div class="row">
                   <div class="col-lg-8 mx-auto">
-                    <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
+                    <h2 class="text-secondary text-uppercase mb-0">Drama Movies Editor's Top 10 Choice</h2>
                     <hr class="star-dark mb-5">
-                    <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-                    <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                    <ol style="list-style-type:none;">
+                        {% for index, item in choice[5].iterrows() %}
+                        <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                          {% endfor %}
+                      </ol>
+                    <h4> <a href="/drama">More about Drama movies</a> </h4>
+                    <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+                    <br>
                     <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
                       <i class="fa fa-close"></i>
-                      Close Project</a>
+                      Close </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+    
       
 
 
 
                   <!-- Portfolio Modal 7 -->
-  <div class="portfolio-modal mfp-hide" id="portfolio-modal-7">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+                  <div class="portfolio-modal mfp-hide" id="portfolio-modal-7">
+                      <div class="portfolio-modal-dialog bg-white">
+                        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+                          <i class="fa fa-3x fa-times"></i>
+                        </a>
+                        <div class="container text-center">
+                          <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                              <h2 class="text-secondary text-uppercase mb-0">Science Fiction Movies Editor's Top 10 Choice</h2>
+                              <hr class="star-dark mb-5">
+                              <ol style="list-style-type:none;">
+                                  {% for index, item in choice[6].iterrows() %}
+                                  <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                                    {% endfor %}
+                                </ol>
+                              <h4> <a href="/scifi">More about Science Fiction movies</a> </h4>
+                              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+                              <br>
+                              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+                                <i class="fa fa-close"></i>
+                                Close </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              
 
             <!-- Portfolio Modal 8 -->
-  <div class="portfolio-modal mfp-hide" id="portfolio-modal-8">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div class="portfolio-modal mfp-hide" id="portfolio-modal-8">
+                <div class="portfolio-modal-dialog bg-white">
+                  <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+                    <i class="fa fa-3x fa-times"></i>
+                  </a>
+                  <div class="container text-center">
+                    <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <h2 class="text-secondary text-uppercase mb-0">Classic Movies Editor's Top 10 Choice</h2>
+                        <hr class="star-dark mb-5">
+                        <ol style="list-style-type:none;">
+                            {% for index, item in choice[7].iterrows() %}
+                            <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                              {% endfor %}
+                          </ol>
+                        <h4> <a href="/classic">More about Classic movies</a> </h4>
+                        <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+                        <br>
+                        <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+                          <i class="fa fa-close"></i>
+                          Close </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
 
 
             <!-- Portfolio Modal 9 -->
-  <div class="portfolio-modal mfp-hide" id="portfolio-modal-9">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Documentary</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div class="portfolio-modal mfp-hide" id="portfolio-modal-9">
+                <div class="portfolio-modal-dialog bg-white">
+                  <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+                    <i class="fa fa-3x fa-times"></i>
+                  </a>
+                  <div class="container text-center">
+                    <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                        <h2 class="text-secondary text-uppercase mb-0"> Movies Editor's Top 10 Choice</h2>
+                        <hr class="star-dark mb-5">
+                        <ol style="list-style-type:none;">
+                            {% for index, item in choice[8].iterrows() %}
+                            <h3> <li> <a href={{ item['url'] }}> {{ item['Title']}} </li> </h3>
+                              {% endfor %}
+                          </ol>
+                        <h4> <a href="/all">More about movies</a> </h4>
+                        <img class="img-fluid mb-5" src="/static/img/portfolio/mi.png" alt="" href = "/templates/action.html" >
+                        <br>
+                        <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+                          <i class="fa fa-close"></i>
+                          Close </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
 
 
 

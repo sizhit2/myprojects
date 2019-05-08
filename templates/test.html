@@ -66,17 +66,18 @@
 			<ul>	
 					{% if prediction == 'bad' %}
 					
-							<h2 class="font-weight-light mb-0"> Please give me more concrete infomation !</h2>
+							<h2 class="font-weight-light mb-0">That was a bad query! Please give me more concrete infomation !</h2>
 							{% else %}
 						{% for item in prediction %}
 							
 							<form action={{item[3]}} method="GET",target="_blank">
-								<button type="submit">{{ item[2][0] }}</button>
+								<button href="submit">{{ item[2][0] }}</button>
 							</form>
 							<h4 class="font-weight-light mb-0"> Rating: <body>{{ item[0] }}</body> </h4>
 							
 							<h4 class="font-weight-light mb-0"> Genre: <body>{{ item[1] }}</body> </h4>
-							<body class="font-weight-light mb-0"> {{ item[2][1] }}</body>
+							
+							<h4 class="font-weight-light mb-0"> Description: {{ item[2][1]['Description'] }}</body>
 							
 							
 							
